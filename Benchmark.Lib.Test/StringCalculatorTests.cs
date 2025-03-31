@@ -63,10 +63,4 @@ public sealed class StringCalculatorTests
  
         Assert.True(result.Message == $"Negatives are not allowed: {rejectedNumbers}");
     }
-
-    [Fact]
-    public void Should_Fail_The_Build_Process()
-    {
-        Assert.True(false);
-    }
 }
