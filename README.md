@@ -13,27 +13,6 @@ This project is a C# class library built using .NET 9 that provides an 'Add' met
 ### Prerequisites
 - **.NET 9 SDK**
 
-### Installation
-1. **Clone the repository:**
-   ```sh
-   git clone https://github.com/your-repo/string-calculator.git
-   cd string-calculator
-   ```
-2. **Restore dependencies:**
-   ```sh
-   dotnet restore
-   ```
-3. **Build the solution:**
-   ```sh
-   dotnet build
-   ```
-
-### Running Tests
-Execute the unit tests with:
-```sh
-   dotnet test
-```
-
 ## Usage
 You can use the `StringCalculator.Add(string numbers)` method in your application. Example:
 ```csharp
