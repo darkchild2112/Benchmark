@@ -4,14 +4,18 @@ namespace Benchmark.Lib;
 
 public class StringCalculator
 {
-    private static readonly string[] defaultDelimiters = [",", "\n"];
+    private static readonly char[] defaultDelimiters = [',', '\n'];
 
     public int Add(string numbers)
     {
+        // Add Extension method to check for empty or white space
         if(string.IsNullOrEmpty(numbers))
             return 0;
 
-        var split = numbers.Split(defaultDelimiters, StringSplitOptions.None);
+        var delimeters = GetDelimeters(numbers);
+        var formattedInput = FormatInput(numbers);
+
+        var split = formattedInput.Split(delimeters, StringSplitOptions.None);
 
         var validNumbers = new List<int>();
         var invalidNumbers = new List<int>();
@@ -34,5 +38,24 @@ public class StringCalculator
             throw new ArgumentException($"Negatives not allowed: {string.Join(", ", invalidNumbers)}");
 
         return validNumbers.Sum();
+    }
+
+    private char[] GetDelimeters(string input)
+    {
+        if (input.StartsWith("//"))
+        {
+            var delimeters = input.Substring(2, input.IndexOf("\n") - 2);
+            return [..defaultDelimiters, ..delimeters.ToArray()];
+        }
+
+        return defaultDelimiters;
+    }
+
+    private string FormatInput(string input)
+    {
+        if (input.StartsWith("//"))
+            return input.Substring(input.IndexOf("\n") + 1);
+
+        return input;
     }
 }
