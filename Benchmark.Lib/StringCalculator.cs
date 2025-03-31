@@ -1,31 +1,28 @@
-﻿using System;
+﻿namespace Benchmark.Lib;
 
-namespace Benchmark.Lib;
-
-public class StringCalculator
+public static class StringCalculator
 {
     private static readonly char[] defaultDelimiters = [',', '\n'];
 
-    public int Add(string numbers)
+    public static int Add(string numbers)
     {
-        // Add Extension method to check for empty or white space
         if(string.IsNullOrEmpty(numbers))
             return 0;
 
         var delimeters = GetDelimeters(numbers);
         var formattedInput = FormatInput(numbers);
 
-        var split = formattedInput.Split(delimeters, StringSplitOptions.None);
+        var numArr = formattedInput.Split(delimeters, StringSplitOptions.None);
 
         var validNumbers = new List<int>();
         var invalidNumbers = new List<int>();
 
-        for (int i = 0; i < split.Length; i++)
+        for (int i = 0; i < numArr.Length; i++)
         {
-            var parsed = int.TryParse(split[i], out int num);
+            var parsed = int.TryParse(numArr[i], out int num);
 
             if(!parsed)
-                throw new ArgumentException($"Invalid number given: {split[i]}");
+                throw new ArgumentException($"Invalid number given: {numArr[i]}");
 
             if (num < 0)
                 invalidNumbers.Add(num);
@@ -35,25 +32,27 @@ public class StringCalculator
         }
 
         if(invalidNumbers.Count > 0)
-            throw new ArgumentException($"Negatives not allowed: {string.Join(", ", invalidNumbers)}");
+            throw new ArgumentException($"Negatives are not allowed: {string.Join(", ", invalidNumbers)}");
 
         return validNumbers.Sum();
     }
 
-    private char[] GetDelimeters(string input)
+    private static char[] GetDelimeters(string input)
     {
         if (input.StartsWith("//"))
         {
             var delimeters = input.Substring(2, input.IndexOf("\n") - 2);
+
             return [..defaultDelimiters, ..delimeters.ToArray()];
         }
 
         return defaultDelimiters;
     }
 
-    private string FormatInput(string input)
+    private static string FormatInput(string input)
     {
         if (input.StartsWith("//"))
+            // Could have used a range operator here but I find them less readable (especially for junior devs)
             return input.Substring(input.IndexOf("\n") + 1);
 
         return input;
