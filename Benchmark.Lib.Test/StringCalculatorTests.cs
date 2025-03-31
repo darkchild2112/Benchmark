@@ -6,7 +6,7 @@ public class StringCalculatorTests
     [InlineData("", 0)]
     [InlineData("1", 1)]
     [InlineData("1,2", 3)]
-    public void Strould_Return_The_Expected_Result(string input, int expectedResult)
+    public void Should_Return_The_Expected_Result(string input, int expectedResult)
     {
         // Arrange
         var calculator = new StringCalculator();
@@ -21,8 +21,8 @@ public class StringCalculatorTests
     [Theory]
     [InlineData("1\n2,3", 6)]
     [InlineData("1,2\n3", 6)]
-    [InlineData("“//;\n1;2”", 3)]
-    public void Strould_Allow_Different_Types_Of_Delimeters(string input, int expectedResult)
+    [InlineData("//;\n1;2", 3)]
+    public void Should_Allow_Different_Types_Of_Delimeters(string input, int expectedResult)
     {
         // Arrange
         var calculator = new StringCalculator();
@@ -37,7 +37,7 @@ public class StringCalculatorTests
 
     [Theory]
     [InlineData("//*%\n1*2%3", 6)]
-    public void Strould_Allow_Multiple_Delimeters(string input, int expectedResult)
+    public void Should_Allow_Multiple_Delimeters(string input, int expectedResult)
     {
         // Arrange
         var calculator = new StringCalculator();
@@ -62,12 +62,12 @@ public class StringCalculatorTests
         var result = calculator.Add(input);
 
         // Assert
-        Assert.Equal(2, result);
+        Assert.Equal(expectedResult, result);
     }
 
     [Theory]
     [InlineData("1,\n")]
-    public void Strould_Throw_An_Exception_When_Given_Invalid_Input(string input)
+    public void Should_Throw_An_Exception_When_Given_Invalid_Input(string input)
     {
         var calculator = new StringCalculator();
 
@@ -75,16 +75,14 @@ public class StringCalculatorTests
     }
 
     [Theory]
-    [InlineData("-1,\n")]
-    [InlineData("-1,-10")]
-    [InlineData("-1,3,4,5")]
-    public void Strould_Throw_An_Exception_When_Given_Negative_Values(string input)
+    [InlineData("-1,-10", "-1, -10")]
+    [InlineData("-1,3,4,5", "-1")]
+    public void Should_Throw_An_Exception_When_Given_Negative_Values(string input, string rejectedNumbers)
     {
         var calculator = new StringCalculator();
 
         var result = Assert.Throws<ArgumentException>(() => calculator.Add(input));
-
-        // TODO: Assert the exception message   
-
+ 
+        Assert.True(result.Message == $"Negatives not allowed: {rejectedNumbers}");
     }
 }
