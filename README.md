@@ -10,7 +10,7 @@ This project is a C# class library built using .NET 9 that provides an 'Add' met
 - Supports multiple custom delimiters, e.g., `//*%\n1*2%3` returns `6`.
 
 ## Prerequisites
-- **.NET 9 SDK**
+- .NET 9 SDK
 
 ## Usage
 You can use the `StringCalculator.Add(string numbers)` method in your application. Example:
