@@ -1,6 +1,6 @@
 # String Calculator
 
-This project is a C# class library built using .NET 9 that provides an 'Add' method for summing numbers from a delimited string. The solution was written using TDD (Test Driven Development) using an xunit project.
+This project is a C# class library built using .NET 9 that provides an 'Add' method for summing numbers from a delimited string. The solution was written using TDD (Test Driven Development) and used the xUnit test framework.
 
 ## Add Method Features
 - Handles numbers separated by commas (`,`) or new lines (`\n`).
